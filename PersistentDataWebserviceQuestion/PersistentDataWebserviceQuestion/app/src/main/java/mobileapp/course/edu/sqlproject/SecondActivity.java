@@ -19,7 +19,7 @@ public class SecondActivity extends AppCompatActivity {
 
         SharedPreferences sharedPreferences = getSharedPreferences("secondSharedPreferences", Context.MODE_PRIVATE);
 
-        TextView textView = findViewById(R.id.textView);
+        TextView textView = findViewById(R.id.textView1);
 
         int secondActCount = sharedPreferences.getInt("secondActCount", 0);
         textView.setText("Second activity shown: " + secondActCount + " times");

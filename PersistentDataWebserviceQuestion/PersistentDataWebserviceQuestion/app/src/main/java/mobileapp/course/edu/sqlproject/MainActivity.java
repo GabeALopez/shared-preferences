@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         editor.putInt("mainAppCount", appMainCount);
         editor.apply();
 
-        TextView txtView = findViewById(R.id.textView);
+        TextView txtView = findViewById(R.id.textView1);
 
         txtView.setText("App started " + appMainCount + " times");
 
