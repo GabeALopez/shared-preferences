@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.content.SharedPreferences;
 
@@ -14,6 +15,23 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        SharedPreferences mainPreference = getSharedPreferences("mainPreference", MODE_PRIVATE);
+
+        int appMainCount = mainPreference.getInt("mainAppCount", 0);
+
+        appMainCount++;
+
+        SharedPreferences.Editor editor = mainPreference.edit();
+        editor.putInt("mainAppCount", appMainCount);
+        editor.apply();
+
+        TextView txtView = findViewById(R.id.textView);
+
+        txtView.setText("App started " + appMainCount + " times");
+
+        DatabaseHelper databaseHelper = new DatabaseHelper(this);
+
     }
 
     public void onStartActivityButtonClicked(View view) {
