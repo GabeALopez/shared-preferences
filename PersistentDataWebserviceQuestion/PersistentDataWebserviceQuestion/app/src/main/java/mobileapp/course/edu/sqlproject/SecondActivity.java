@@ -1,5 +1,7 @@
 package mobileapp.course.edu.sqlproject;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -14,6 +16,16 @@ public class SecondActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second);
+
+        SharedPreferences sharedPreferences = getSharedPreferences("secondSharedPreferences", Context.MODE_PRIVATE);
+
+        TextView textView = findViewById(R.id.textView);
+
+        int secondActCount = sharedPreferences.getInt("secondActCount", 0);
+        textView.setText("Second activity shown: " + secondActCount + " times");
+
+
+
         //Create an OnItemClickListener
         AdapterView.OnItemClickListener itemClickListener =
                 new AdapterView.OnItemClickListener(){
