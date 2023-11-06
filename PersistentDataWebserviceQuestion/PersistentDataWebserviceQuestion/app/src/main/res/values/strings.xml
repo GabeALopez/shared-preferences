@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">SQL Webservice Project</string>
+    <string-array name="weather">
+        <item>Lakeland - 93</item>
+        <item>Tampa - 95</item>
+        <item>Orlando - 92</item>
+        <item>New York - 72</item>
+        <item>Miami - 102</item>
+    </string-array>
+</resources>
