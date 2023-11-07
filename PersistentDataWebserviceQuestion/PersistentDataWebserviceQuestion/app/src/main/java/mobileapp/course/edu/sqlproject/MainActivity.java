@@ -1,9 +1,11 @@
 package mobileapp.course.edu.sqlproject;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,6 +33,43 @@ public class MainActivity extends AppCompatActivity {
         txtView.setText("App started " + appMainCount + " times");
 
         DatabaseHelper databaseHelper = new DatabaseHelper(this);
+
+        Button saveBtn = findViewById(R.id.buttonSave);
+        Button showBtn = findViewById(R.id.buttonShow);
+        EditText cityEditText = findViewById(R.id.editTextCity);
+        EditText tempEditText = findViewById(R.id.editTextTemp);
+
+        saveBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String city = cityEditText.getText().toString();
+                String temperatureStr = tempEditText.getText().toString();
+
+                if(!city.isEmpty() && !temperatureStr.isEmpty()){
+                    int temperatureInt = Integer.parseInt(temperatureStr);
+                    databaseHelper.storeData(new ModelClass(city, temperatureInt));
+
+                    Toast.makeText(getApplicationContext(), "Data saved", Toast.LENGTH_SHORT).show();
+
+                    cityEditText.setText("");
+                    tempEditText.setText("");
+                }
+            }
+        });
+
+        showBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int secondActCount = mainPreference.getInt("secondActCount", 0);
+                secondActCount++;
+                SharedPreferences.Editor editor1 = mainPreference.edit();
+
+                editor1.putInt("secondActCount", secondActCount);
+                editor1.apply();
+
+                Intent intent = new Intent(MainActivity.this, SecondActivity.class);
+            }
+        });
 
     }
 

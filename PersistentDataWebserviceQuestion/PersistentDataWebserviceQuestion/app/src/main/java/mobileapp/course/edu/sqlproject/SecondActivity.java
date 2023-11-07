@@ -3,12 +3,17 @@ package mobileapp.course.edu.sqlproject;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Display;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 
 public class SecondActivity extends AppCompatActivity {
 
@@ -23,6 +28,15 @@ public class SecondActivity extends AppCompatActivity {
 
         int secondActCount = sharedPreferences.getInt("secondActCount", 0);
         textView.setText("Second activity shown: " + secondActCount + " times");
+
+        DatabaseHelper dbHelp = new DatabaseHelper(this);
+        ListView lstViewWeather = findViewById(R.id.list_weather);
+
+        ArrayList<String> weatherLst = dbHelp.getAllWeather();
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, weatherLst);
+
+        lstViewWeather.setAdapter(adapter);
 
 
 

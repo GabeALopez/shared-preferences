@@ -5,19 +5,16 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.graphics.Bitmap;
 import android.widget.Toast;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
   Context context;
-  String dbName = "weatherDB.db";
-  int dbVer = 1;
+  private static final String dbName = "weatherDB.db";
+  private static final int dbVer = 1;
 
   String createTable = "CREATE TABLE weather ( " +
     "city TEXT, " +
@@ -60,11 +57,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
   }
 
-  public List < String > getAllWeather() {
-    List < String > weatherList = new ArrayList < > ();
+  public ArrayList <String> getAllWeather() {
+    ArrayList <String> weatherList = new ArrayList < > ();
     SQLiteDatabase database = this.getReadableDatabase();
 
-    Cursor myCursor = database.rawQuery("SELECT city, temperature, FROM weather", null);
+    Cursor myCursor = database.rawQuery("SELECT city, temperature FROM weather", null);
 
     // looping through all rows and adding to list
     if (myCursor.moveToFirst()) {
