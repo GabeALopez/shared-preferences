@@ -2,7 +2,7 @@ package mobileapp.course.edu.sqlproject;
 
 public class weatherClass {
 
-    // declare variables
+    //Declare variables
     private static String city;
     private static int temperature;
 
@@ -13,7 +13,7 @@ public class weatherClass {
         this.temperature = temperature;
     }
 
-    // getters and setters
+    //Getters and setters
     public static String getCity() {
         return city;
     }
