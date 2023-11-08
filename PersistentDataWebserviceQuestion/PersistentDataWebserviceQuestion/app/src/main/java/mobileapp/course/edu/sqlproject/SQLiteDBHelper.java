@@ -8,44 +8,50 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class DatabaseHelper extends SQLiteOpenHelper {
+public class SQLiteDBHelper extends SQLiteOpenHelper {
 
   Context context;
   private static final String dbName = "weatherDB.db";
   private static final int dbVer = 1;
 
+  //Create first table
   String createTable = "CREATE TABLE weather ( " +
     "city TEXT, " +
     "temperature INTEGER)";
 
-  public DatabaseHelper(Context context) {
+  //Set up database helper object
+  public SQLiteDBHelper(Context context) {
     super(context, dbName, null, dbVer);
     this.context = context;
   }
 
   @Override
+  //Create database
   public void onCreate(SQLiteDatabase database) {
     database.execSQL(createTable);
   }
 
   @Override
+  //How to update information when necessary
   public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
     // Drop older table if existed
     db.execSQL("DROP TABLE IF EXISTS " + dbName);
     onCreate(db); // Create tables again
   }
 
-  public void storeData(ModelClass modelClass){
+  //Inserts the weather information
+  public void insertWeather(weatherClass weatherClass){
     SQLiteDatabase database = this.getWritableDatabase();
 
+    //Get values of city and temperature
     ContentValues contentVal = new ContentValues();
-    contentVal.put("city", modelClass.getCity());
-    contentVal.put("temperature", modelClass.getTemperature());
+    contentVal.put("city", weatherClass.getCity());
+    contentVal.put("temperature", weatherClass.getTemperature());
 
     long checkQuery = database.insert("Weather", null, contentVal);
 
+    //Check if the query had returned an error. If not show a message that the data was sent
     if(checkQuery != -1){
       Toast.makeText(context, "Data Saved", Toast.LENGTH_SHORT).show();
 
@@ -57,13 +63,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
   }
 
+  //Get the information of the weather and put into a ArrayList
   public ArrayList <String> getAllWeather() {
     ArrayList <String> weatherList = new ArrayList < > ();
     SQLiteDatabase database = this.getReadableDatabase();
 
     Cursor myCursor = database.rawQuery("SELECT city, temperature FROM weather", null);
 
-    // looping through all rows and adding to list
+    //Loop through all tables and push information into list
     if (myCursor.moveToFirst()) {
       do {
          String city = myCursor.getString(myCursor.getColumnIndex("city"));
@@ -75,10 +82,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
       } while (myCursor.moveToNext());
     }
-    // close db connection
+    // close database connection
     myCursor.close();
     database.close();
-    // return notes list
+    // return the weather list
     return weatherList;
   }
 }

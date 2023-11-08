@@ -1,6 +1,6 @@
 package mobileapp.course.edu.sqlproject;
 
-public class ModelClass{
+public class weatherClass {
 
     // declare variables
     private static String city;
@@ -8,7 +8,7 @@ public class ModelClass{
 
 
 
-    public ModelClass(String city, int temperature) {
+    public weatherClass(String city, int temperature) {
         this.city = city;
         this.temperature = temperature;
     }

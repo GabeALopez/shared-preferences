@@ -1,17 +1,13 @@
 package mobileapp.course.edu.sqlproject;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Display;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -22,41 +18,25 @@ public class SecondActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second);
 
-        SharedPreferences sharedPreferences = getSharedPreferences("secondSharedPreferences", Context.MODE_PRIVATE);
+        //Get intent from main activity
+        Intent intent = getIntent();
+        String value = intent.getStringExtra("mainKey");
 
+
+        //Get the shared preference and assign values
+        SharedPreferences sharedPreferences = getSharedPreferences("mainPreference", Context.MODE_PRIVATE);
         TextView textView = findViewById(R.id.textView1);
-
         int secondActCount = sharedPreferences.getInt("secondActCount", 0);
         textView.setText("Second activity shown: " + secondActCount + " times");
 
-        DatabaseHelper dbHelp = new DatabaseHelper(this);
+        //Set up database, get information from database, and push that information to the ArrayList
+        SQLiteDBHelper dbHelp = new SQLiteDBHelper(this);
         ListView lstViewWeather = findViewById(R.id.list_weather);
-
         ArrayList<String> weatherLst = dbHelp.getAllWeather();
-
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, weatherLst);
-
         lstViewWeather.setAdapter(adapter);
 
 
-
-        //Create an OnItemClickListener
-        AdapterView.OnItemClickListener itemClickListener =
-                new AdapterView.OnItemClickListener(){
-                    @Override
-                    public void onItemClick(AdapterView<?> listView,
-                                            View itemView,
-                                            int position,
-                                            long id) {
-                        Toast.makeText(SecondActivity.this, "Item No: " + position, Toast.LENGTH_SHORT).show();
-                    }
-                };
-        //Add the listener to the list view
-        ListView listView = (ListView) findViewById(R.id.list_weather);
-        listView.setOnItemClickListener(itemClickListener);
-
-        String weather = getIntent().getStringExtra("Weather");
-        String city = getIntent().getStringExtra("City");
     }
 
 }
